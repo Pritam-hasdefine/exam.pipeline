@@ -1,39 +1,30 @@
-pipeline { 
-
-    environment { 
-        registry = "pritam9604/exam.docker" 
-        registryCredential = 'pritam9604' 
-        dockerImage = '' 
-    }
-    agent any 
-    stages { 
-        stage('Cloning our Git') { 
-            steps { 
-                git 'https://github.com/Pritam-hasdefine/exam.pipeline.git' 
-            }
-        } 
-        stage('Building our image') { 
-            steps { 
-                script { 
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
-                }
-            }
+pipeline {
+   agent any
+stages {
+   stage('dockerhub login'){
+        steps{
+         // withCredentials([usernamePassword(credentialsId: 'dockerhubID', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                sh 'docker login -u pritam9604 -p pritam@1234'
+             }
         }
-        stage('Deploy our image') { 
-            steps { 
-                script { 
-                    docker.withRegistry( '', registryCredential ) { 
-                        dockerImage.push() 
-                    }
-                } 
-            }
-        } 
-        stage('Cleaning up') { 
-            steps { 
-                sh "docker rmi $registry:$BUILD_NUMBER" 
-
-            }
-        } 
-    }
-}
-
+  // }
+   stage('image pull'){
+        steps{
+                sh 'docker pull nginx'
+             }
+        }
+   stage('image check'){
+        steps{
+                sh 'docker images'
+             }
+        }
+   stage('image push'){
+        steps{
+                 //give a tag to your pulled image          
+               sh 'docker tag nginx  '
+              //push the newly tagged image to your repo
+               sh 'docker push pritam9604/exam.docker:apache'
+             }
+          }
+      }
+   }
