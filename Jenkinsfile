@@ -16,9 +16,8 @@ pipeline {
         stage('docker hub login') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-cred1', passwordVariable: 'password', usernameVariable: 'username')]) {
-                remote.user = username
-                remote.password=password    
-}
+                sh 'docker login -u $username -p $password'   
+                }
             }
         }
         stage('image push') {
