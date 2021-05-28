@@ -21,7 +21,7 @@ stages {
    stage('image push'){
         steps{
                  //give a tag to your pulled image          
-               sh 'docker tag nginx  '
+               sh 'docker tag nginx pritam9604/exam.docker:apache  '
               //push the newly tagged image to your repo
                sh 'docker push pritam9604/exam.docker:apache'
              }
