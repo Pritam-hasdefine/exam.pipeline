@@ -1,30 +1,28 @@
 pipeline {
-   agent any
-stages {
-   stage('dockerhub login'){
-        steps{
-         // withCredentials([usernamePassword(credentialsId: 'dockerhubID', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                sh 'docker login -u pritam9604 -p pritam@1234'
-             }
+    agent any
+
+    stages {
+        stage('image check') {
+            steps {
+                sh "docker images"
+            }
         }
-  // }
-   stage('image pull'){
-        steps{
-                sh 'docker pull nginx'
-             }
-        }
-   stage('image check'){
-        steps{
+        stage('image build') {
+            steps {
+                sh 'docker build -t pritam .'
                 sh 'docker images'
-             }
+            }
         }
-   stage('image push'){
-        steps{
-                 //give a tag to your pulled image          
-               sh 'docker tag nginx pritamdas/test:pritam'
-              //push the newly tagged image to your repo
-               sh 'docker push pritamdas/test:pritam'
-             }
-          }
-      }
-   }
+        stage('docker hub login') {
+            steps {
+                sh 'docker login -u pritam9604 -p pritam@1234 '
+            }
+        }
+        stage('image push') {
+            steps {
+            sh 'docker tag pritam pritam9604/exam.docker:apache'
+            sh 'docker push pritam9604/exam.docker:apache'
+            }
+        }
+    }
+}
