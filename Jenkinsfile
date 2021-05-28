@@ -15,7 +15,7 @@ pipeline {
         }
         stage('docker hub login') {
             steps {
-                sh 'docker login --user=pritam9604 --password=pritam@1234'
+                sh 'docker login --user pritam9604 --password pritam@1234'
             }
         }
         stage('image push') {
