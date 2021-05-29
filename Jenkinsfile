@@ -15,15 +15,15 @@ pipeline {
         }
         stage('docker hub login') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-cred1', passwordVariable: 'password', usernameVariable: 'username')]) {
-                sh 'docker login -u $username -p $password'   
-                }
+ 
+                sh 'docker login -u pritamhit2016 -p pritam1234'   
+               
             }
         }
         stage('image push') {
             steps {
-            sh 'docker tag pritam pritam9604/exam.docker:apache'
-            sh 'docker push pritam9604/exam.docker:apache'
+            sh 'docker tag pritam pritamhit2016/exam.docker:apache'
+            sh 'docker push pritamhit2016/exam.docker:apache'
             }
         }
     }
