@@ -22,8 +22,8 @@ pipeline {
         }
         stage('image push') {
             steps {
-            sh 'docker tag pritam pritamhit2016/exam.docker:apache'
-            sh 'docker push pritamhit2016/exam.docker:apache'
+            sh 'docker tag pritam pritamhit2016/exam.docker:apache1'
+            sh 'docker push pritamhit2016/exam.docker:apache1'
             }
         }
     }
